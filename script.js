@@ -3,7 +3,7 @@ const NHM_CALLOUT_RATIO = 1 / 20;
 const INDUSTRY_FIRST_FIX = 0.8;
 const NHM_FIRST_FIX = 0.95;
 const CALLOUT_COST = 100;
-const MAX_ASSETS = 10000;
+const MAX_ASSETS = 1000;
 
 const numberFormatter = new Intl.NumberFormat('en-GB', {
   minimumFractionDigits: 0,
@@ -18,7 +18,6 @@ const currencyFormatter = new Intl.NumberFormat('en-GB', {
 
 const selectors = {
   form: document.getElementById('inputs'),
-  assetNumber: document.querySelector('input[name="assets"]'),
   assetSlider: document.querySelector('input[name="assetsRange"]'),
   assetDisplay: document.querySelector('[data-field="assetDisplay"]'),
   calloutsSaved: document.querySelector('[data-field="calloutsSaved"]'),
@@ -37,12 +36,11 @@ function clampAssets(value) {
   return Math.min(MAX_ASSETS, Math.round(numeric));
 }
 
-function syncAssetInputs(source) {
-  if (!selectors.assetNumber || !selectors.assetSlider) return;
+function syncAssetInput(source) {
+  if (!selectors.assetSlider) return;
 
   const clampedValue = clampAssets(source.value);
 
-  selectors.assetNumber.value = clampedValue;
   selectors.assetSlider.value = clampedValue;
   if (selectors.assetDisplay) {
     selectors.assetDisplay.textContent = `${numberFormatter.format(clampedValue)} assets`;
@@ -65,10 +63,18 @@ function activateTab(target) {
 }
 
 function recalc() {
-  if (!selectors.form) return;
+  const outputs = [
+    selectors.calloutsSaved,
+    selectors.returnVisitsSaved,
+    selectors.calloutSavings,
+    selectors.returnSavings,
+    selectors.totalSavings,
+  ];
 
-  const assets = clampAssets(selectors.assetNumber?.value ?? 0);
-  syncAssetInputs({ value: assets });
+  if (!selectors.form || outputs.some((element) => !element)) return;
+
+  const assets = clampAssets(selectors.assetSlider?.value ?? 0);
+  syncAssetInput({ value: assets });
 
   const industryCallouts = Math.round(assets * INDUSTRY_CALLOUT_RATIO);
   const nhmCallouts = Math.round(assets * NHM_CALLOUT_RATIO);
@@ -89,22 +95,32 @@ function recalc() {
   );
 }
 
-selectors.assetNumber?.addEventListener('input', (event) => {
-  syncAssetInputs(event.target);
-  recalc();
-});
+function enhanceTooltips() {
+  const tooltipTriggers = document.querySelectorAll('.info[title]');
+
+  tooltipTriggers.forEach((trigger) => {
+    const tooltipText = trigger.getAttribute('title');
+    if (!tooltipText) return;
+
+    trigger.dataset.tooltip = tooltipText;
+    trigger.setAttribute('tabindex', '0');
+    trigger.setAttribute('aria-label', tooltipText);
+    trigger.removeAttribute('title');
+  });
+}
 
 selectors.assetSlider?.addEventListener('input', (event) => {
-  syncAssetInputs(event.target);
+  syncAssetInput(event.target);
   recalc();
 });
 tabButtons.forEach((button) => {
   button.addEventListener('click', () => activateTab(button.dataset.tabTarget));
 });
 
-if (selectors.assetNumber) {
-  syncAssetInputs(selectors.assetNumber);
+if (selectors.assetSlider) {
+  syncAssetInput(selectors.assetSlider);
 }
 
 activateTab('callouts');
+enhanceTooltips();
 recalc();
