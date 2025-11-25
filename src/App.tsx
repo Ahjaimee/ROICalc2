@@ -57,6 +57,12 @@ const highlightStats = [
 const App: React.FC = () => {
   const [assetInput, setAssetInput] = useState<string>('100');
   const [tabNotice, setTabNotice] = useState<string>('');
+  const [copyStatus, setCopyStatus] = useState<string>('');
+  const [embedUrl, setEmbedUrl] = useState<string>(() => {
+    if (typeof window === 'undefined') return 'https://example.com/roi-calculator';
+    const { origin, pathname } = window.location;
+    return `${origin}${pathname}`;
+  });
 
   const assetCount = useMemo(() => {
     const parsed = Number(assetInput);
@@ -91,6 +97,24 @@ const App: React.FC = () => {
     if (tab.disabled) {
       setTabNotice('Coming soon');
       setTimeout(() => setTabNotice(''), 1500);
+    }
+  };
+
+  const embedCode = useMemo(
+    () =>
+      `<iframe src="${embedUrl}" title="NHM ROI Calculator" style="width: 100%; min-height: 780px; border: 1px solid #e2e8f0; border-radius: 16px;" loading="lazy" allow="clipboard-read; clipboard-write"></iframe>`,
+    [embedUrl],
+  );
+
+  const copyText = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus('Copied to clipboard');
+    } catch (error) {
+      console.error('Clipboard copy failed', error);
+      setCopyStatus('Copy manually if needed');
+    } finally {
+      setTimeout(() => setCopyStatus(''), 1700);
     }
   };
 
@@ -269,6 +293,83 @@ const App: React.FC = () => {
               <button className="rounded-xl border border-nhm-accent/60 px-4 py-2 text-sm font-semibold text-nhm-navy bg-white hover:border-nhm-accent">
                 Download summary
               </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm shadow-nhm-navy/5">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-nhm-textSecondary">Embed or preview</p>
+              <h3 className="text-2xl font-bold text-slate-900">Use the calculator on any website</h3>
+              <p className="text-sm text-nhm-textSecondary">Copy the snippet to embed on a landing page or share the live preview link.</p>
+            </div>
+            {copyStatus && <span className="text-xs font-semibold text-nhm-accent" aria-live="polite">{copyStatus}</span>}
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[1.1fr,0.9fr] lg:gap-8">
+            <div className="space-y-3 rounded-2xl border border-slate-200 bg-nhm-background p-4">
+              <label className="space-y-2 text-sm text-nhm-textSecondary">
+                <div className="flex items-center justify-between gap-2 text-slate-800">
+                  <span className="font-semibold">Hosted URL</span>
+                  <span className="text-[11px] rounded-full bg-white px-2 py-1 font-semibold text-nhm-textSecondary border border-slate-200">Customise the embed</span>
+                </div>
+                <input
+                  type="url"
+                  value={embedUrl}
+                  onChange={(e) => setEmbedUrl(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-inner focus:border-nhm-accent focus:outline-none focus:ring-2 focus:ring-nhm-accent/30"
+                  placeholder="https://yourdomain.com/nhm-roi"
+                />
+              </label>
+
+              <label className="space-y-2 text-sm text-nhm-textSecondary">
+                <div className="flex items-center justify-between gap-2 text-slate-800">
+                  <span className="font-semibold">Embed code</span>
+                  <button
+                    type="button"
+                    onClick={() => copyText(embedCode)}
+                    className="rounded-lg border border-nhm-navy/30 px-3 py-1 text-xs font-semibold text-nhm-navy bg-white hover:border-nhm-navy/60"
+                  >
+                    Copy embed
+                  </button>
+                </div>
+                <textarea
+                  value={embedCode}
+                  readOnly
+                  rows={4}
+                  className="w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-[13px] leading-relaxed text-slate-800 shadow-inner focus:border-nhm-accent focus:outline-none focus:ring-2 focus:ring-nhm-accent/30"
+                />
+              </label>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-nhm-background p-4 shadow-inner space-y-4">
+              <div>
+                <p className="text-sm font-semibold text-slate-900">Quick preview</p>
+                <p className="text-sm text-nhm-textSecondary">Open the hosted calculator in a new tab or share it directly.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={embedUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-nhm-navy px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-nhm-navy/20 hover:bg-nhm-navy/90"
+                >
+                  Open live preview
+                </a>
+                <button
+                  type="button"
+                  onClick={() => copyText(embedUrl)}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-nhm-accent/60 px-4 py-2 text-sm font-semibold text-nhm-navy bg-white hover:border-nhm-accent"
+                >
+                  Copy share link
+                </button>
+              </div>
+              <ul className="list-disc space-y-1 pl-5 text-xs text-nhm-textSecondary">
+                <li>Build the site (`npm run build`) and host the `dist/` folder to use the iframe snippet.</li>
+                <li>The iframe keeps the calculator styling and works on marketing pages or portals.</li>
+                <li>Update the hosted URL above if you serve the app from a custom path.</li>
+              </ul>
             </div>
           </div>
         </section>
