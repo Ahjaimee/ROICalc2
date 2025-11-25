@@ -26,10 +26,28 @@ const selectors = {
   totalSavings: document.querySelector('[data-field="totalSavings"]'),
 };
 
+const tabButtons = document.querySelectorAll('[data-tab-target]');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
 function clampToNumber(value) {
   const numeric = Number(value);
   if (!Number.isFinite(numeric) || numeric < 0) return 0;
   return numeric;
+}
+
+function activateTab(target) {
+  tabButtons.forEach((button) => {
+    const isActive = button.dataset.tabTarget === target;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-selected', String(isActive));
+  });
+
+  tabPanels.forEach((panel) => {
+    const isActive = panel.id === `tab-${target}`;
+    panel.classList.toggle('is-active', isActive);
+    panel.setAttribute('aria-hidden', String(!isActive));
+    panel.tabIndex = isActive ? 0 : -1;
+  });
 }
 
 function recalc() {
@@ -60,4 +78,9 @@ function recalc() {
 }
 
 selectors.form?.addEventListener('input', recalc);
+tabButtons.forEach((button) => {
+  button.addEventListener('click', () => activateTab(button.dataset.tabTarget));
+});
+
+activateTab('callouts');
 recalc();
