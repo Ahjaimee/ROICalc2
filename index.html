@@ -62,9 +62,26 @@
                 <div class="field__label">
                   <span>Number of assets</span>
                 </div>
+                <p class="muted small">Use the slider or type to adjust up to 10,000 assets.</p>
                 <div class="input-wrap">
-                  <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
+                  <input
+                    type="number"
+                    name="assets"
+                    min="0"
+                    max="10000"
+                    step="1"
+                    value="100"
+                    inputmode="numeric"
+                    aria-label="Number of assets"
+                  />
                   <span class="unit">assets</span>
+                </div>
+                <div class="range-control" aria-hidden="true">
+                  <input type="range" name="assetsRange" min="0" max="10000" step="1" value="100" />
+                  <div class="range-control__scale">
+                    <span>0</span>
+                    <span>10k</span>
+                  </div>
                 </div>
               </label>
             </form>

@@ -3,10 +3,11 @@ const NHM_CALLOUT_RATIO = 1 / 20;
 const INDUSTRY_FIRST_FIX = 0.8;
 const NHM_FIRST_FIX = 0.95;
 const CALLOUT_COST = 100;
+const MAX_ASSETS = 10000;
 
 const numberFormatter = new Intl.NumberFormat('en-GB', {
-  minimumFractionDigits: 1,
-  maximumFractionDigits: 1,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
 
 const currencyFormatter = new Intl.NumberFormat('en-GB', {
@@ -17,6 +18,8 @@ const currencyFormatter = new Intl.NumberFormat('en-GB', {
 
 const selectors = {
   form: document.getElementById('inputs'),
+  assetNumber: document.querySelector('input[name="assets"]'),
+  assetSlider: document.querySelector('input[name="assetsRange"]'),
   industryCallouts: document.querySelector('[data-field="industryCallouts"]'),
   nhmCallouts: document.querySelector('[data-field="nhmCallouts"]'),
   calloutsSaved: document.querySelector('[data-field="calloutsSaved"]'),
@@ -29,10 +32,19 @@ const selectors = {
 const tabButtons = document.querySelectorAll('[data-tab-target]');
 const tabPanels = document.querySelectorAll('.tab-panel');
 
-function clampToNumber(value) {
+function clampAssets(value) {
   const numeric = Number(value);
   if (!Number.isFinite(numeric) || numeric < 0) return 0;
-  return numeric;
+  return Math.min(MAX_ASSETS, Math.round(numeric));
+}
+
+function syncAssetInputs(source) {
+  if (!selectors.assetNumber || !selectors.assetSlider) return;
+
+  const clampedValue = clampAssets(source.value);
+
+  selectors.assetNumber.value = clampedValue;
+  selectors.assetSlider.value = clampedValue;
 }
 
 function activateTab(target) {
@@ -53,16 +65,16 @@ function activateTab(target) {
 function recalc() {
   if (!selectors.form) return;
 
-  const data = new FormData(selectors.form);
-  const assets = clampToNumber(data.get('assets'));
+  const assets = clampAssets(selectors.assetNumber?.value ?? 0);
+  syncAssetInputs({ value: assets });
 
-  const industryCallouts = assets * INDUSTRY_CALLOUT_RATIO;
-  const nhmCallouts = assets * NHM_CALLOUT_RATIO;
+  const industryCallouts = Math.round(assets * INDUSTRY_CALLOUT_RATIO);
+  const nhmCallouts = Math.round(assets * NHM_CALLOUT_RATIO);
   const calloutsSaved = Math.max(0, industryCallouts - nhmCallouts);
   const calloutSavingsValue = calloutsSaved * CALLOUT_COST;
 
-  const returnVisitsIndustry = industryCallouts * (1 - INDUSTRY_FIRST_FIX);
-  const returnVisitsNHM = nhmCallouts * (1 - NHM_FIRST_FIX);
+  const returnVisitsIndustry = Math.round(industryCallouts * (1 - INDUSTRY_FIRST_FIX));
+  const returnVisitsNHM = Math.round(nhmCallouts * (1 - NHM_FIRST_FIX));
   const returnVisitsSaved = Math.max(0, returnVisitsIndustry - returnVisitsNHM);
   const returnVisitSavingsValue = returnVisitsSaved * CALLOUT_COST;
 
@@ -77,10 +89,22 @@ function recalc() {
   );
 }
 
-selectors.form?.addEventListener('input', recalc);
+selectors.assetNumber?.addEventListener('input', (event) => {
+  syncAssetInputs(event.target);
+  recalc();
+});
+
+selectors.assetSlider?.addEventListener('input', (event) => {
+  syncAssetInputs(event.target);
+  recalc();
+});
 tabButtons.forEach((button) => {
   button.addEventListener('click', () => activateTab(button.dataset.tabTarget));
 });
+
+if (selectors.assetNumber) {
+  syncAssetInputs(selectors.assetNumber);
+}
 
 activateTab('callouts');
 recalc();
