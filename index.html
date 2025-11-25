@@ -61,32 +61,16 @@
                 <div class="field__label">
                   <span>Number of assets</span>
                 </div>
-                <p class="muted small">Drag in single-asset steps or type an exact value up to 10,000 assets.</p>
-                <div class="control-grid">
-                  <div class="range-control" aria-hidden="true">
-                    <div class="range-header">
-                      <span class="muted small">Drag to adjust</span>
-                      <span class="range-value" data-field="assetDisplay">100 assets</span>
-                    </div>
-                    <input type="range" name="assetsRange" min="0" max="10000" step="1" value="100" />
-                    <div class="range-control__scale">
-                      <span>0</span>
-                      <span>10k</span>
-                    </div>
+                <p class="muted small">Drag in single-asset steps up to 1,000 assets.</p>
+                <div class="range-control">
+                  <div class="range-header">
+                    <span class="muted small">Drag to adjust</span>
+                    <span class="range-value" data-field="assetDisplay">100 assets</span>
                   </div>
-
-                  <div class="input-wrap">
-                    <input
-                      type="number"
-                      name="assets"
-                      min="0"
-                      max="10000"
-                      step="1"
-                      value="100"
-                      inputmode="numeric"
-                      aria-label="Number of assets"
-                    />
-                    <span class="unit">assets</span>
+                  <input type="range" name="assetsRange" min="0" max="1000" step="1" value="100" />
+                  <div class="range-control__scale">
+                    <span>0</span>
+                    <span>1k</span>
                   </div>
                 </div>
               </label>
