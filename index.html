@@ -4,123 +4,154 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NHM ROI Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="layout">
-    <header class="hero">
-      <div class="hero__brand">NHM ROI Calculator</div>
-      <div class="hero__copy">
-        <p class="kicker">Callout savings tab</p>
-        <h1>Planned maintenance savings</h1>
-        <p class="muted">Explore how NHM’s planned preventative maintenance reduces callouts and costly return visits.</p>
-      </div>
-    </header>
+    <section class="page-intro">
+      <p class="eyebrow">NHM ROI calculator</p>
+      <h1>Planned maintenance savings</h1>
+      <p class="muted">See how NHM’s planned preventative maintenance cuts callouts and expensive return visits.</p>
+    </section>
 
-    <section class="panel">
-      <div class="panel__header">
-        <div>
-          <p class="kicker">Main feature</p>
-          <h2>Callout savings</h2>
-          <p class="muted small">Live calculations refresh as you change the asset count.</p>
-        </div>
-        <div class="pill">Dynamic results</div>
-      </div>
+    <nav class="tab-bar" role="tablist" aria-label="ROI library">
+      <button id="tab-callouts-btn" class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-callouts" data-tab-target="callouts">
+        <span class="tab__label">Callout savings</span>
+        <span class="tab__pill tab__pill--live">Live</span>
+      </button>
+      <button id="tab-energy-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-energy" data-tab-target="energy">
+        <span class="tab__label">Energy efficiency</span>
+        <span class="tab__pill">Coming soon</span>
+      </button>
+      <button id="tab-staff-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-staff" data-tab-target="staff">
+        <span class="tab__label">Staff productivity</span>
+        <span class="tab__pill">Coming soon</span>
+      </button>
+      <button id="tab-inventory-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-inventory" data-tab-target="inventory">
+        <span class="tab__label">Inventory &amp; uptime</span>
+        <span class="tab__pill">Coming soon</span>
+      </button>
+    </nav>
 
-      <div class="split">
-        <article class="card">
-          <header class="card__header">
-            <div class="card__title-row">
-              <h3>Equipment &amp; Assumptions</h3>
-              <span class="info" title="Based on common assistive equipment portfolios.">ℹ</span>
-            </div>
-            <p class="muted small">Beds, hoists, baths, stand aids, etc.</p>
-          </header>
-
-          <form id="inputs" class="form" novalidate>
-            <label class="field">
-              <div class="field__label">
-                <span>Number of assets under NHM PPM</span>
-                <span class="info" title="We assume every asset is covered by NHM planned preventative maintenance.">?</span>
-              </div>
-              <div class="input-wrap">
-                <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
-                <span class="unit">assets</span>
-              </div>
-            </label>
-
-            <div class="assumptions" aria-live="polite">
-              <p class="assumptions__title">Built-in assumptions</p>
-              <ul class="assumptions__list">
-                <li>
-                  <span class="muted">Industry callout rate</span>
-                  <span>1 callout per 10 assets per year</span>
-                </li>
-                <li>
-                  <span class="muted">NHM callout rate</span>
-                  <span>1 callout per 20 assets per year</span>
-                </li>
-                <li>
-                  <span class="muted">Industry first-fix rate</span>
-                  <span>80%</span>
-                </li>
-                <li>
-                  <span class="muted">NHM first-fix rate</span>
-                  <span>95%</span>
-                </li>
-                <li>
-                  <span class="muted">Average cost per callout or revisit</span>
-                  <span>£100</span>
-                </li>
-              </ul>
-            </div>
-          </form>
-        </article>
-
-        <article class="card card--summary" aria-live="polite">
-          <header class="card__header card__header--summary">
-            <div>
-              <p class="muted">Total annual savings</p>
-              <p class="summary__value" data-field="totalSavings">£0</p>
-            </div>
-            <span class="pill pill--accent">Live</span>
-          </header>
-
-          <div class="tile-grid">
-            <article class="tile">
-              <p class="tile__label">Industry callouts / year</p>
-              <p class="tile__value" data-field="industryCallouts">0.0</p>
-              <p class="tile__sub">If you followed typical industry performance.</p>
-            </article>
-            <article class="tile">
-              <p class="tile__label">NHM callouts / year</p>
-              <p class="tile__value" data-field="nhmCallouts">0.0</p>
-              <p class="tile__sub">Under NHM planned preventative maintenance.</p>
-            </article>
-            <article class="tile tile--accent">
-              <div class="tile__label-row">
-                <p class="tile__label">Callout cost saved</p>
-                <span class="badge">Savings</span>
-              </div>
-              <p class="tile__value" data-field="calloutSavings">£0</p>
-              <p class="tile__sub">From fewer callouts across your assets.</p>
-            </article>
-            <article class="tile tile--accent">
-              <div class="tile__label-row">
-                <p class="tile__label">Return visit cost saved</p>
-                <span class="badge">Savings</span>
-              </div>
-              <p class="tile__value" data-field="returnSavings">£0</p>
-              <p class="tile__sub">From a higher first-fix success rate.</p>
-            </article>
+    <section id="tab-callouts" class="tab-panel is-active" role="tabpanel" aria-label="Callout savings" aria-labelledby="tab-callouts-btn" tabindex="0">
+      <section class="panel">
+        <div class="panel__header">
+          <div>
+            <p class="kicker">Dashboard</p>
+            <h2>Live ROI outlook</h2>
+            <p class="muted small">Update the asset count to refresh savings instantly.</p>
           </div>
-        </article>
+          <div class="pill pill--blue">Callouts library</div>
+        </div>
+
+        <div class="split">
+          <article class="card">
+            <header class="card__header">
+              <div>
+                <h3>Asset input</h3>
+                <p class="muted small">All assets covered under NHM PPM.</p>
+              </div>
+              <span class="info" title="We assume every covered asset follows NHM planned preventative maintenance.">?</span>
+            </header>
+
+            <form id="inputs" class="form" novalidate>
+              <label class="field">
+                <div class="field__label">
+                  <span>Number of assets</span>
+                </div>
+                <div class="input-wrap">
+                  <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
+                  <span class="unit">assets</span>
+                </div>
+              </label>
+            </form>
+          </article>
+
+          <article class="card card--summary" aria-live="polite">
+            <header class="card__header card__header--summary">
+              <div>
+                <p class="muted">Total annual savings</p>
+                <p class="summary__value" data-field="totalSavings">£0</p>
+              </div>
+              <span class="pill pill--accent">£100 per callout</span>
+            </header>
+
+            <div class="tile-grid">
+              <article class="tile tile--accent">
+                <div class="tile__label-row">
+                  <p class="tile__label">Callouts avoided per year</p>
+                  <span class="info" title="Assumes industry averages of 1 callout per 10 assets vs NHM at 1 per 20.">?</span>
+                </div>
+                <p class="tile__value" data-field="calloutsSaved">0.0</p>
+                <p class="tile__sub">Worth <strong data-field="calloutSavings">£0</strong> saved.</p>
+              </article>
+
+              <article class="tile tile--accent">
+                <div class="tile__label-row">
+                  <p class="tile__label">Return visits avoided</p>
+                  <span class="info" title="Based on first-fix uplift: industry 80% vs NHM 95%.">?</span>
+                </div>
+                <p class="tile__value" data-field="returnVisitsSaved">0.0</p>
+                <p class="tile__sub">Worth <strong data-field="returnSavings">£0</strong> saved.</p>
+              </article>
+
+              <article class="tile">
+                <p class="tile__label">Industry callouts / year</p>
+                <p class="tile__value" data-field="industryCallouts">0.0</p>
+                <p class="tile__sub">If you followed typical industry performance.</p>
+              </article>
+              <article class="tile">
+                <p class="tile__label">NHM callouts / year</p>
+                <p class="tile__value" data-field="nhmCallouts">0.0</p>
+                <p class="tile__sub">Under NHM planned preventative maintenance.</p>
+              </article>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section id="tab-energy" class="tab-panel" role="tabpanel" aria-label="Energy efficiency" aria-labelledby="tab-energy-btn" aria-hidden="true" tabindex="-1">
+      <div class="card card--placeholder">
+        <div class="card__header">
+          <div>
+            <h3>Energy efficiency ROI</h3>
+            <p class="muted small">A forthcoming calculator for reduced consumption and running costs.</p>
+          </div>
+          <span class="pill pill--ghost">In design</span>
+        </div>
+        <p class="muted">Stay tuned for savings from sensor-driven schedules and smart controls.</p>
       </div>
     </section>
 
-    <footer class="footer">
-      <p>Standalone HTML, CSS, and JavaScript web tool. Works offline and requires no build tooling.</p>
-    </footer>
+    <section id="tab-staff" class="tab-panel" role="tabpanel" aria-label="Staff productivity" aria-labelledby="tab-staff-btn" aria-hidden="true" tabindex="-1">
+      <div class="card card--placeholder">
+        <div class="card__header">
+          <div>
+            <h3>Staff productivity ROI</h3>
+            <p class="muted small">Quantifies technician time saved and dispatch reductions.</p>
+          </div>
+          <span class="pill pill--ghost">In design</span>
+        </div>
+        <p class="muted">We’ll show how fewer truck rolls and first-time fixes add to savings.</p>
+      </div>
+    </section>
+
+    <section id="tab-inventory" class="tab-panel" role="tabpanel" aria-label="Inventory and uptime" aria-labelledby="tab-inventory-btn" aria-hidden="true" tabindex="-1">
+      <div class="card card--placeholder">
+        <div class="card__header">
+          <div>
+            <h3>Inventory &amp; uptime ROI</h3>
+            <p class="muted small">Models spares optimisation and uptime resilience.</p>
+          </div>
+          <span class="pill pill--ghost">In design</span>
+        </div>
+        <p class="muted">Track how better parts planning reduces downtime costs across sites.</p>
+      </div>
+    </section>
   </main>
 
   <script src="script.js"></script>
