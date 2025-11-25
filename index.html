@@ -41,10 +41,9 @@
         <div class="panel__header">
           <div>
             <p class="kicker">Dashboard</p>
-            <h2>Live ROI outlook</h2>
-            <p class="muted small">Update the asset count to refresh savings instantly.</p>
+            <h2>Callouts Savings</h2>
+            <p class="muted small">Update the asset count to refresh estimated savings instantly.</p>
           </div>
-          <div class="pill pill--blue">Callouts library</div>
         </div>
 
         <div class="split">
@@ -54,7 +53,7 @@
                 <h3>Asset input</h3>
                 <p class="muted small">All assets covered under NHM PPM.</p>
               </div>
-              <span class="info" title="We assume every covered asset follows NHM planned preventative maintenance.">?</span>
+              <span class="info" title="Include all equipment such as hoists, beds, pressure pumps, baths, etc. (excluding slings). Assumes industry average of 1 callout per 6 assets annually, versus NHM at 1 per 20 with stronger first-fix performance.">?</span>
             </header>
 
             <form id="inputs" class="form" novalidate>
@@ -62,25 +61,32 @@
                 <div class="field__label">
                   <span>Number of assets</span>
                 </div>
-                <p class="muted small">Use the slider or type to adjust up to 10,000 assets.</p>
-                <div class="input-wrap">
-                  <input
-                    type="number"
-                    name="assets"
-                    min="0"
-                    max="10000"
-                    step="1"
-                    value="100"
-                    inputmode="numeric"
-                    aria-label="Number of assets"
-                  />
-                  <span class="unit">assets</span>
-                </div>
-                <div class="range-control" aria-hidden="true">
-                  <input type="range" name="assetsRange" min="0" max="10000" step="1" value="100" />
-                  <div class="range-control__scale">
-                    <span>0</span>
-                    <span>10k</span>
+                <p class="muted small">Drag in single-asset steps or type an exact value up to 10,000 assets.</p>
+                <div class="control-grid">
+                  <div class="range-control" aria-hidden="true">
+                    <div class="range-header">
+                      <span class="muted small">Drag to adjust</span>
+                      <span class="range-value" data-field="assetDisplay">100 assets</span>
+                    </div>
+                    <input type="range" name="assetsRange" min="0" max="10000" step="1" value="100" />
+                    <div class="range-control__scale">
+                      <span>0</span>
+                      <span>10k</span>
+                    </div>
+                  </div>
+
+                  <div class="input-wrap">
+                    <input
+                      type="number"
+                      name="assets"
+                      min="0"
+                      max="10000"
+                      step="1"
+                      value="100"
+                      inputmode="numeric"
+                      aria-label="Number of assets"
+                    />
+                    <span class="unit">assets</span>
                   </div>
                 </div>
               </label>
@@ -90,7 +96,7 @@
           <article class="card card--summary" aria-live="polite">
             <header class="card__header card__header--summary">
               <div>
-                <p class="muted">Total annual savings</p>
+                <p class="muted">Estimated annual savings</p>
                 <p class="summary__value" data-field="totalSavings">£0</p>
               </div>
               <span class="pill pill--accent">£100 per callout</span>
@@ -100,30 +106,19 @@
               <article class="tile tile--accent">
                 <div class="tile__label-row">
                   <p class="tile__label">Callouts avoided per year</p>
-                  <span class="info" title="Assumes industry averages of 1 callout per 10 assets vs NHM at 1 per 20.">?</span>
+                  <span class="info" title="Industry average: ~1 callout per 6 assets annually. NHM planned maintenance: ~1 callout per 20 assets.">?</span>
                 </div>
                 <p class="tile__value" data-field="calloutsSaved">0.0</p>
-                <p class="tile__sub">Worth <strong data-field="calloutSavings">£0</strong> saved.</p>
+                <p class="tile__sub">Estimated savings: <strong data-field="calloutSavings">£0</strong>.</p>
               </article>
 
               <article class="tile tile--accent">
                 <div class="tile__label-row">
                   <p class="tile__label">Return visits avoided</p>
-                  <span class="info" title="Based on first-fix uplift: industry 80% vs NHM 95%.">?</span>
+                  <span class="info" title="First-fix comparison: industry averages ~80% versus NHM at ~95%, cutting down second visits.">?</span>
                 </div>
                 <p class="tile__value" data-field="returnVisitsSaved">0.0</p>
-                <p class="tile__sub">Worth <strong data-field="returnSavings">£0</strong> saved.</p>
-              </article>
-
-              <article class="tile">
-                <p class="tile__label">Industry callouts / year</p>
-                <p class="tile__value" data-field="industryCallouts">0.0</p>
-                <p class="tile__sub">If you followed typical industry performance.</p>
-              </article>
-              <article class="tile">
-                <p class="tile__label">NHM callouts / year</p>
-                <p class="tile__value" data-field="nhmCallouts">0.0</p>
-                <p class="tile__sub">Under NHM planned preventative maintenance.</p>
+                <p class="tile__sub">Estimated savings: <strong data-field="returnSavings">£0</strong>.</p>
               </article>
             </div>
           </article>
@@ -171,6 +166,6 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script type="module" src="./script.js"></script>
 </body>
 </html>
