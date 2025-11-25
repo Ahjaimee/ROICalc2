@@ -1,3 +1,9 @@
+const INDUSTRY_CALLOUT_RATIO = 1 / 10;
+const NHM_CALLOUT_RATIO = 1 / 20;
+const INDUSTRY_FIRST_FIX = 0.8;
+const NHM_FIRST_FIX = 0.95;
+const CALLOUT_COST = 100;
+
 const numberFormatter = new Intl.NumberFormat('en-GB', {
   minimumFractionDigits: 1,
   maximumFractionDigits: 1,
@@ -16,42 +22,37 @@ const selectors = {
   calloutSavings: document.querySelector('[data-field="calloutSavings"]'),
   returnSavings: document.querySelector('[data-field="returnSavings"]'),
   totalSavings: document.querySelector('[data-field="totalSavings"]'),
-  calloutsAvoided: document.querySelector('[data-field="calloutsAvoided"]'),
 };
 
-function clampNumber(value, min = 0, max = Number.POSITIVE_INFINITY) {
+function clampToNumber(value) {
   const numeric = Number(value);
-  if (!Number.isFinite(numeric)) return min;
-  return Math.min(max, Math.max(min, numeric));
+  if (!Number.isFinite(numeric) || numeric < 0) return 0;
+  return numeric;
 }
 
 function recalc() {
   if (!selectors.form) return;
 
   const data = new FormData(selectors.form);
-  const assets = clampNumber(data.get('assets')); // asset count
-  const calloutCost = clampNumber(data.get('calloutCost'));
-  const industryRate = clampNumber(data.get('industryRate'));
-  const nhmRate = clampNumber(data.get('nhmRate'));
-  const industryFix = clampNumber(data.get('industryFix'), 0, 1);
-  const nhmFix = clampNumber(data.get('nhmFix'), 0, 1);
+  const assets = clampToNumber(data.get('assets'));
 
-  const industryCallouts = assets * industryRate;
-  const nhmCallouts = assets * nhmRate;
-  const calloutsAvoided = Math.max(0, industryCallouts - nhmCallouts);
-  const calloutSavingsValue = calloutsAvoided * calloutCost;
+  const industryCallouts = assets * INDUSTRY_CALLOUT_RATIO;
+  const nhmCallouts = assets * NHM_CALLOUT_RATIO;
+  const calloutsSaved = Math.max(0, industryCallouts - nhmCallouts);
+  const calloutSavingsValue = calloutsSaved * CALLOUT_COST;
 
-  const returnVisitsIndustry = industryCallouts * (1 - industryFix);
-  const returnVisitsNhm = nhmCallouts * (1 - nhmFix);
-  const returnVisitsAvoided = Math.max(0, returnVisitsIndustry - returnVisitsNhm);
-  const returnVisitSavingsValue = returnVisitsAvoided * calloutCost;
+  const returnVisitsIndustry = industryCallouts * (1 - INDUSTRY_FIRST_FIX);
+  const returnVisitsNHM = nhmCallouts * (1 - NHM_FIRST_FIX);
+  const returnVisitsSaved = Math.max(0, returnVisitsIndustry - returnVisitsNHM);
+  const returnVisitSavingsValue = returnVisitsSaved * CALLOUT_COST;
 
   selectors.industryCallouts.textContent = numberFormatter.format(industryCallouts);
   selectors.nhmCallouts.textContent = numberFormatter.format(nhmCallouts);
   selectors.calloutSavings.textContent = currencyFormatter.format(calloutSavingsValue);
   selectors.returnSavings.textContent = currencyFormatter.format(returnVisitSavingsValue);
-  selectors.totalSavings.textContent = currencyFormatter.format(calloutSavingsValue + returnVisitSavingsValue);
-  selectors.calloutsAvoided.textContent = numberFormatter.format(calloutsAvoided);
+  selectors.totalSavings.textContent = currencyFormatter.format(
+    calloutSavingsValue + returnVisitSavingsValue,
+  );
 }
 
 selectors.form?.addEventListener('input', recalc);

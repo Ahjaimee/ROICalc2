@@ -11,123 +11,118 @@
     <header class="hero">
       <div class="hero__brand">NHM ROI Calculator</div>
       <div class="hero__copy">
+        <p class="kicker">Callout savings tab</p>
         <h1>Planned maintenance savings</h1>
-        <p>Standalone HTML, CSS, and JavaScript web tool. Drop this folder on any host or open it directly in your browser—no build steps required.</p>
+        <p class="muted">Explore how NHM’s planned preventative maintenance reduces callouts and costly return visits.</p>
       </div>
     </header>
 
     <section class="panel">
       <div class="panel__header">
         <div>
-          <p class="kicker">Step 1</p>
-          <h2>Enter your asset details</h2>
-          <p class="muted">Use the defaults or tweak the values to match your fleet and callout costs.</p>
+          <p class="kicker">Main feature</p>
+          <h2>Callout savings</h2>
+          <p class="muted small">Live calculations refresh as you change the asset count.</p>
         </div>
-        <div class="pill">Live updates</div>
+        <div class="pill">Dynamic results</div>
       </div>
 
-      <form class="grid" id="inputs" novalidate>
-        <label class="field">
-          <span class="label">Assets under NHM planned maintenance</span>
-          <div class="input-wrap">
-            <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
-            <span class="unit">assets</span>
-          </div>
-        </label>
-        <label class="field">
-          <span class="label">Average cost per callout or revisit</span>
-          <div class="input-wrap">
-            <input type="number" name="calloutCost" min="0" value="100" step="10" inputmode="decimal" />
-            <span class="unit">£</span>
-          </div>
-        </label>
-        <label class="field">
-          <span class="label">Industry callouts per asset (annual)</span>
-          <div class="input-wrap">
-            <input type="number" name="industryRate" min="0" max="10" step="0.1" value="0.1" inputmode="decimal" />
-            <span class="unit">rate</span>
-          </div>
-        </label>
-        <label class="field">
-          <span class="label">NHM callouts per asset (annual)</span>
-          <div class="input-wrap">
-            <input type="number" name="nhmRate" min="0" max="10" step="0.05" value="0.05" inputmode="decimal" />
-            <span class="unit">rate</span>
-          </div>
-        </label>
-        <label class="field">
-          <span class="label">Industry first-fix rate</span>
-          <div class="input-wrap">
-            <input type="number" name="industryFix" min="0" max="1" step="0.01" value="0.8" inputmode="decimal" />
-            <span class="unit">0-1</span>
-          </div>
-        </label>
-        <label class="field">
-          <span class="label">NHM first-fix rate</span>
-          <div class="input-wrap">
-            <input type="number" name="nhmFix" min="0" max="1" step="0.01" value="0.95" inputmode="decimal" />
-            <span class="unit">0-1</span>
-          </div>
-        </label>
-      </form>
-    </section>
+      <div class="split">
+        <article class="card">
+          <header class="card__header">
+            <div class="card__title-row">
+              <h3>Equipment &amp; Assumptions</h3>
+              <span class="info" title="Based on common assistive equipment portfolios.">ℹ</span>
+            </div>
+            <p class="muted small">Beds, hoists, baths, stand aids, etc.</p>
+          </header>
 
-    <section class="panel" aria-live="polite">
-      <div class="panel__header">
-        <div>
-          <p class="kicker">Step 2</p>
-          <h2>See your savings</h2>
-          <p class="muted">Figures refresh instantly as you type.</p>
-        </div>
-        <div class="pill pill--success">Independent</div>
-      </div>
+          <form id="inputs" class="form" novalidate>
+            <label class="field">
+              <div class="field__label">
+                <span>Number of assets under NHM PPM</span>
+                <span class="info" title="We assume every asset is covered by NHM planned preventative maintenance.">?</span>
+              </div>
+              <div class="input-wrap">
+                <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
+                <span class="unit">assets</span>
+              </div>
+            </label>
 
-      <div class="summary">
-        <div>
-          <p class="muted">Total annual savings</p>
-          <p class="summary__value" data-field="totalSavings">£0</p>
-        </div>
-        <p class="muted small">Reduced callouts and return visits compared to a typical provider.</p>
-      </div>
+            <div class="assumptions" aria-live="polite">
+              <p class="assumptions__title">Built-in assumptions</p>
+              <ul class="assumptions__list">
+                <li>
+                  <span class="muted">Industry callout rate</span>
+                  <span>1 callout per 10 assets per year</span>
+                </li>
+                <li>
+                  <span class="muted">NHM callout rate</span>
+                  <span>1 callout per 20 assets per year</span>
+                </li>
+                <li>
+                  <span class="muted">Industry first-fix rate</span>
+                  <span>80%</span>
+                </li>
+                <li>
+                  <span class="muted">NHM first-fix rate</span>
+                  <span>95%</span>
+                </li>
+                <li>
+                  <span class="muted">Average cost per callout or revisit</span>
+                  <span>£100</span>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </article>
 
-      <div class="stat-grid">
-        <article class="stat">
-          <p class="muted">Industry callouts / year</p>
-          <p class="stat__value" data-field="industryCallouts">0.0</p>
-          <p class="small">Typical performance without NHM.</p>
-        </article>
-        <article class="stat">
-          <p class="muted">NHM callouts / year</p>
-          <p class="stat__value" data-field="nhmCallouts">0.0</p>
-          <p class="small">Expected with planned maintenance.</p>
-        </article>
-        <article class="stat stat--highlight">
-          <p class="muted">Callout cost saved</p>
-          <p class="stat__value" data-field="calloutSavings">£0</p>
-          <p class="small">Fewer callouts across your assets.</p>
-        </article>
-        <article class="stat stat--highlight">
-          <p class="muted">Return visit cost saved</p>
-          <p class="stat__value" data-field="returnSavings">£0</p>
-          <p class="small">Higher first-fix success rate.</p>
-        </article>
-        <article class="stat">
-          <p class="muted">Estimated callouts avoided</p>
-          <p class="stat__value" data-field="calloutsAvoided">0.0</p>
-          <p class="small">Difference between typical performance and NHM.</p>
-        </article>
-        <article class="stat stat--muted">
-          <p class="muted">Copy & paste ready</p>
-          <p class="stat__value">HTML</p>
-          <p class="small">No external URLs needed.</p>
+        <article class="card card--summary" aria-live="polite">
+          <header class="card__header card__header--summary">
+            <div>
+              <p class="muted">Total annual savings</p>
+              <p class="summary__value" data-field="totalSavings">£0</p>
+            </div>
+            <span class="pill pill--accent">Live</span>
+          </header>
+
+          <div class="tile-grid">
+            <article class="tile">
+              <p class="tile__label">Industry callouts / year</p>
+              <p class="tile__value" data-field="industryCallouts">0.0</p>
+              <p class="tile__sub">If you followed typical industry performance.</p>
+            </article>
+            <article class="tile">
+              <p class="tile__label">NHM callouts / year</p>
+              <p class="tile__value" data-field="nhmCallouts">0.0</p>
+              <p class="tile__sub">Under NHM planned preventative maintenance.</p>
+            </article>
+            <article class="tile tile--accent">
+              <div class="tile__label-row">
+                <p class="tile__label">Callout cost saved</p>
+                <span class="badge">Savings</span>
+              </div>
+              <p class="tile__value" data-field="calloutSavings">£0</p>
+              <p class="tile__sub">From fewer callouts across your assets.</p>
+            </article>
+            <article class="tile tile--accent">
+              <div class="tile__label-row">
+                <p class="tile__label">Return visit cost saved</p>
+                <span class="badge">Savings</span>
+              </div>
+              <p class="tile__value" data-field="returnSavings">£0</p>
+              <p class="tile__sub">From a higher first-fix success rate.</p>
+            </article>
+          </div>
         </article>
       </div>
     </section>
 
     <footer class="footer">
-      <p>Keep this single HTML/CSS/JS bundle wherever you like. It works offline and requires no build tooling.</p>
+      <p>Standalone HTML, CSS, and JavaScript web tool. Works offline and requires no build tooling.</p>
     </footer>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
