@@ -19,6 +19,8 @@ const selectors = {
   form: document.getElementById('inputs'),
   industryCallouts: document.querySelector('[data-field="industryCallouts"]'),
   nhmCallouts: document.querySelector('[data-field="nhmCallouts"]'),
+  calloutsSaved: document.querySelector('[data-field="calloutsSaved"]'),
+  returnVisitsSaved: document.querySelector('[data-field="returnVisitsSaved"]'),
   calloutSavings: document.querySelector('[data-field="calloutSavings"]'),
   returnSavings: document.querySelector('[data-field="returnSavings"]'),
   totalSavings: document.querySelector('[data-field="totalSavings"]'),
@@ -48,6 +50,8 @@ function recalc() {
 
   selectors.industryCallouts.textContent = numberFormatter.format(industryCallouts);
   selectors.nhmCallouts.textContent = numberFormatter.format(nhmCallouts);
+  selectors.calloutsSaved.textContent = numberFormatter.format(calloutsSaved);
+  selectors.returnVisitsSaved.textContent = numberFormatter.format(returnVisitsSaved);
   selectors.calloutSavings.textContent = currencyFormatter.format(calloutSavingsValue);
   selectors.returnSavings.textContent = currencyFormatter.format(returnVisitSavingsValue);
   selectors.totalSavings.textContent = currencyFormatter.format(

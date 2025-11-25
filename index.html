@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NHM ROI Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,66 +14,39 @@
     <section class="page-intro">
       <p class="eyebrow">NHM ROI calculator</p>
       <h1>Planned maintenance savings</h1>
-      <p class="muted">Explore how NHM’s planned preventative maintenance reduces callouts and costly return visits.</p>
+      <p class="muted">See how NHM’s planned preventative maintenance cuts callouts and expensive return visits.</p>
     </section>
 
     <section class="panel">
-      <header class="panel__header">
+      <div class="panel__header">
         <div>
-          <p class="kicker">Main feature</p>
-          <h2>Callout savings</h2>
-          <p class="muted small">Live calculations refresh as you change the asset count.</p>
+          <p class="kicker">Dashboard</p>
+          <h2>Live ROI outlook</h2>
+          <p class="muted small">Update the asset count to refresh savings instantly.</p>
         </div>
-        <div class="pill">Dynamic results</div>
-      </header>
+        <div class="pill">Real-time</div>
+      </div>
 
       <div class="split">
         <article class="card">
           <header class="card__header">
-            <div class="card__title-row">
-              <h3>Equipment &amp; Assumptions</h3>
-              <span class="info" title="Based on common assistive equipment portfolios.">ℹ</span>
+            <div>
+              <h3>Asset input</h3>
+              <p class="muted small">All assets covered under NHM PPM.</p>
             </div>
-            <p class="muted small">Beds, hoists, baths, stand aids, etc.</p>
+            <span class="info" title="We assume every covered asset follows NHM planned preventative maintenance.">?</span>
           </header>
 
           <form id="inputs" class="form" novalidate>
             <label class="field">
               <div class="field__label">
-                <span>Number of assets under NHM PPM</span>
-                <span class="info" title="We assume every asset is covered by NHM planned preventative maintenance.">?</span>
+                <span>Number of assets</span>
               </div>
               <div class="input-wrap">
                 <input type="number" name="assets" min="0" value="100" inputmode="numeric" />
                 <span class="unit">assets</span>
               </div>
             </label>
-
-            <div class="assumptions" aria-live="polite">
-              <p class="assumptions__title">Built-in assumptions</p>
-              <ul class="assumptions__list">
-                <li>
-                  <span class="muted">Industry callout rate</span>
-                  <span>1 callout per 10 assets per year</span>
-                </li>
-                <li>
-                  <span class="muted">NHM callout rate</span>
-                  <span>1 callout per 20 assets per year</span>
-                </li>
-                <li>
-                  <span class="muted">Industry first-fix rate</span>
-                  <span>80%</span>
-                </li>
-                <li>
-                  <span class="muted">NHM first-fix rate</span>
-                  <span>95%</span>
-                </li>
-                <li>
-                  <span class="muted">Average cost per callout or revisit</span>
-                  <span>£100</span>
-                </li>
-              </ul>
-            </div>
           </form>
         </article>
 
@@ -80,10 +56,28 @@
               <p class="muted">Total annual savings</p>
               <p class="summary__value" data-field="totalSavings">£0</p>
             </div>
-            <span class="pill pill--accent">Live</span>
+            <span class="pill pill--accent">£100 per callout</span>
           </header>
 
           <div class="tile-grid">
+            <article class="tile tile--accent">
+              <div class="tile__label-row">
+                <p class="tile__label">Callouts avoided per year</p>
+                <span class="info" title="Assumes industry averages of 1 callout per 10 assets vs NHM at 1 per 20.">?</span>
+              </div>
+              <p class="tile__value" data-field="calloutsSaved">0.0</p>
+              <p class="tile__sub">Worth <strong data-field="calloutSavings">£0</strong> saved.</p>
+            </article>
+
+            <article class="tile tile--accent">
+              <div class="tile__label-row">
+                <p class="tile__label">Return visits avoided</p>
+                <span class="info" title="Based on first-fix uplift: industry 80% vs NHM 95%.">?</span>
+              </div>
+              <p class="tile__value" data-field="returnVisitsSaved">0.0</p>
+              <p class="tile__sub">Worth <strong data-field="returnSavings">£0</strong> saved.</p>
+            </article>
+
             <article class="tile">
               <p class="tile__label">Industry callouts / year</p>
               <p class="tile__value" data-field="industryCallouts">0.0</p>
@@ -93,22 +87,6 @@
               <p class="tile__label">NHM callouts / year</p>
               <p class="tile__value" data-field="nhmCallouts">0.0</p>
               <p class="tile__sub">Under NHM planned preventative maintenance.</p>
-            </article>
-            <article class="tile tile--accent">
-              <div class="tile__label-row">
-                <p class="tile__label">Callout cost saved</p>
-                <span class="badge">Savings</span>
-              </div>
-              <p class="tile__value" data-field="calloutSavings">£0</p>
-              <p class="tile__sub">From fewer callouts across your assets.</p>
-            </article>
-            <article class="tile tile--accent">
-              <div class="tile__label-row">
-                <p class="tile__label">Return visit cost saved</p>
-                <span class="badge">Savings</span>
-              </div>
-              <p class="tile__value" data-field="returnSavings">£0</p>
-              <p class="tile__sub">From a higher first-fix success rate.</p>
             </article>
           </div>
         </article>
