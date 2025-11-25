@@ -316,6 +316,52 @@ main.layout {
   outline: none;
 }
 
+.range-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0 0.1rem;
+}
+
+.range-control input[type='range'] {
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(45, 109, 246, 0.18), rgba(255, 122, 24, 0.18));
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 6px 18px rgba(45, 109, 246, 0.1);
+}
+
+.range-control input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d6df6, #ff7a18);
+  border: 2px solid #ffffff;
+  box-shadow: 0 8px 18px rgba(45, 109, 246, 0.3);
+  cursor: grab;
+}
+
+.range-control input[type='range']::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d6df6, #ff7a18);
+  border: 2px solid #ffffff;
+  box-shadow: 0 8px 18px rgba(45, 109, 246, 0.3);
+  cursor: grab;
+}
+
+.range-control__scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .unit {
   font-weight: 800;
   color: var(--accent-blue-strong);
