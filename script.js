@@ -1,4 +1,4 @@
-const INDUSTRY_CALLOUT_RATIO = 1 / 10;
+const INDUSTRY_CALLOUT_RATIO = 1 / 6;
 const NHM_CALLOUT_RATIO = 1 / 20;
 const INDUSTRY_FIRST_FIX = 0.8;
 const NHM_FIRST_FIX = 0.95;
@@ -20,8 +20,7 @@ const selectors = {
   form: document.getElementById('inputs'),
   assetNumber: document.querySelector('input[name="assets"]'),
   assetSlider: document.querySelector('input[name="assetsRange"]'),
-  industryCallouts: document.querySelector('[data-field="industryCallouts"]'),
-  nhmCallouts: document.querySelector('[data-field="nhmCallouts"]'),
+  assetDisplay: document.querySelector('[data-field="assetDisplay"]'),
   calloutsSaved: document.querySelector('[data-field="calloutsSaved"]'),
   returnVisitsSaved: document.querySelector('[data-field="returnVisitsSaved"]'),
   calloutSavings: document.querySelector('[data-field="calloutSavings"]'),
@@ -45,6 +44,9 @@ function syncAssetInputs(source) {
 
   selectors.assetNumber.value = clampedValue;
   selectors.assetSlider.value = clampedValue;
+  if (selectors.assetDisplay) {
+    selectors.assetDisplay.textContent = `${numberFormatter.format(clampedValue)} assets`;
+  }
 }
 
 function activateTab(target) {
@@ -78,8 +80,6 @@ function recalc() {
   const returnVisitsSaved = Math.max(0, returnVisitsIndustry - returnVisitsNHM);
   const returnVisitSavingsValue = returnVisitsSaved * CALLOUT_COST;
 
-  selectors.industryCallouts.textContent = numberFormatter.format(industryCallouts);
-  selectors.nhmCallouts.textContent = numberFormatter.format(nhmCallouts);
   selectors.calloutsSaved.textContent = numberFormatter.format(calloutsSaved);
   selectors.returnVisitsSaved.textContent = numberFormatter.format(returnVisitsSaved);
   selectors.calloutSavings.textContent = currencyFormatter.format(calloutSavingsValue);

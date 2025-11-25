@@ -20,9 +20,9 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 12% 22%, rgba(45, 109, 246, 0.12), transparent 28%),
-    radial-gradient(circle at 88% 12%, rgba(255, 122, 24, 0.12), transparent 30%),
-    var(--subtle);
+  background: radial-gradient(circle at 14% 18%, rgba(45, 109, 246, 0.08), transparent 32%),
+    radial-gradient(circle at 84% 8%, rgba(255, 122, 24, 0.12), transparent 36%),
+    linear-gradient(135deg, #f6f8ff, #fdfaf6);
   color: var(--ink);
 }
 
@@ -35,7 +35,7 @@ p {
 
 h1 {
   font-size: clamp(1.9rem, 2.5vw, 2.5rem);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
   font-weight: 700;
 }
 
@@ -52,12 +52,12 @@ h3 {
 }
 
 main.layout {
-  max-width: 1160px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem 3.25rem;
+  padding: 3.25rem 1.75rem 3.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.35rem;
 }
 
 .page-intro {
@@ -141,9 +141,9 @@ main.layout {
 .panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 1.9rem;
-  box-shadow: 0 18px 48px rgba(12, 16, 31, 0.05);
+  border-radius: 22px;
+  padding: 2.15rem;
+  box-shadow: 0 22px 55px rgba(12, 16, 31, 0.06);
 }
 
 .panel__header {
@@ -151,9 +151,9 @@ main.layout {
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
-  padding-bottom: 1.05rem;
+  padding-bottom: 1.15rem;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.35rem;
 }
 
 .kicker {
@@ -206,16 +206,16 @@ main.layout {
 
 .split {
   display: grid;
-  gap: 1.1rem;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.15fr);
+  gap: 1.2rem;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(460px, 1.08fr);
 }
 
 .card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 1.25rem 1.35rem;
-  box-shadow: 0 16px 42px rgba(12, 16, 31, 0.06);
+  border-radius: 18px;
+  padding: 1.35rem 1.45rem;
+  box-shadow: 0 20px 48px rgba(12, 16, 31, 0.05);
 }
 
 .card__header {
@@ -233,7 +233,7 @@ main.layout {
 .card--summary {
   background: linear-gradient(135deg, rgba(45, 109, 246, 0.08), rgba(255, 122, 24, 0.18));
   color: var(--ink);
-  border: 1px solid rgba(45, 109, 246, 0.2);
+  border: 1px solid rgba(45, 109, 246, 0.22);
 }
 
 .card--summary .muted {
@@ -241,8 +241,8 @@ main.layout {
 }
 
 .info {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -259,16 +259,16 @@ main.layout {
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.25rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  padding: 1rem 1.05rem;
+  padding: 1.05rem 1.1rem;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   background: linear-gradient(135deg, #f7faff, #fffaf5);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 12px 26px rgba(12, 16, 31, 0.04);
 }
@@ -286,29 +286,29 @@ main.layout {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  padding: 0.5rem 0.6rem 0.5rem 0.7rem;
-  border-radius: 12px;
-  border: 1px solid rgba(45, 109, 246, 0.18);
-  background: linear-gradient(135deg, #ffffff, #f4f7ff);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 24px rgba(45, 109, 246, 0.08);
+  padding: 0.8rem 0.85rem 0.8rem 0.95rem;
+  border-radius: 14px;
+  border: 1px solid rgba(45, 109, 246, 0.2);
+  background: linear-gradient(135deg, #ffffff, #f4f6ff);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 12px 26px rgba(45, 109, 246, 0.08);
   transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .input-wrap:focus-within {
-  border-color: rgba(45, 109, 246, 0.6);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 3px rgba(45, 109, 246, 0.22),
-    0 12px 28px rgba(45, 109, 246, 0.12);
+  border-color: rgba(45, 109, 246, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 0 0 4px rgba(45, 109, 246, 0.18),
+    0 14px 32px rgba(45, 109, 246, 0.16);
   background: linear-gradient(135deg, #f7fbff, #fffaf5);
 }
 
 .input-wrap input {
   width: 100%;
-  padding: 0.95rem 1rem;
-  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
   border: 1px solid transparent;
   background: transparent;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.02rem;
+  font-weight: 800;
   color: var(--ink);
 }
 
@@ -316,41 +316,63 @@ main.layout {
   outline: none;
 }
 
+.control-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 1.6fr 0.9fr;
+  align-items: stretch;
+}
+
 .range-control {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 0 0.1rem;
+  gap: 0.6rem;
+  padding: 0.55rem 0.55rem 0.75rem;
+  border: 1px solid rgba(45, 109, 246, 0.18);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f7faff, #fffaf5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 12px 24px rgba(12, 16, 31, 0.04);
+}
+
+.range-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.range-value {
+  font-weight: 800;
+  color: var(--accent-blue-strong);
 }
 
 .range-control input[type='range'] {
   appearance: none;
   width: 100%;
-  height: 12px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(45, 109, 246, 0.18), rgba(255, 122, 24, 0.18));
+  height: 22px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(45, 109, 246, 0.28), rgba(255, 122, 24, 0.28));
   outline: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 6px 18px rgba(45, 109, 246, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 18px rgba(45, 109, 246, 0.12);
 }
 
 .range-control input[type='range']::-webkit-slider-thumb {
   appearance: none;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
+  width: 44px;
+  height: 32px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #2d6df6, #ff7a18);
-  border: 2px solid #ffffff;
-  box-shadow: 0 8px 18px rgba(45, 109, 246, 0.3);
+  border: 3px solid #ffffff;
+  box-shadow: 0 10px 20px rgba(45, 109, 246, 0.25);
   cursor: grab;
 }
 
 .range-control input[type='range']::-moz-range-thumb {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
+  width: 44px;
+  height: 32px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #2d6df6, #ff7a18);
-  border: 2px solid #ffffff;
-  box-shadow: 0 8px 18px rgba(45, 109, 246, 0.3);
+  border: 3px solid #ffffff;
+  box-shadow: 0 10px 20px rgba(45, 109, 246, 0.25);
   cursor: grab;
 }
 
@@ -366,11 +388,11 @@ main.layout {
   font-weight: 800;
   color: var(--accent-blue-strong);
   letter-spacing: 0.04em;
-  padding: 0.55rem 0.75rem;
-  border-radius: 10px;
-  border: 1px solid rgba(45, 109, 246, 0.22);
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(45, 109, 246, 0.24);
   background: rgba(45, 109, 246, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .summary__value {
@@ -382,8 +404,8 @@ main.layout {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.05rem;
 }
 
 .tile {
