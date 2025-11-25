@@ -1,23 +1,10 @@
 # NHM ROI Calculator
 
-This project is a Vite + React + TypeScript single-page app. Because the entrypoint (`src/main.tsx`) is TypeScript and uses module imports, the calculator must be served through the Vite dev server or through the compiled `dist` output. Opening `index.html` directly in the browser (e.g., using a `file://` URL) will lead to a blank screen because the browser cannot transpile TypeScript on its own.
+A self contained HTML/CSS/JavaScript ROI calculator—no build tooling or framework required. Open `index.html` directly in your browser or host the files on any static server.
 
-## Getting started
+## Using the calculator
+1. Open `index.html` in your browser (double-click it or serve the folder from any static host).
+2. Adjust the asset count, callout assumptions, or first-fix rates.
+3. The annual callouts, avoided visits, and savings figures update instantly.
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run the development server (compiles TypeScript on the fly):
-   ```bash
-   npm run dev
-   ```
-   Then open the printed localhost URL in your browser.
-
-## Building for static hosting
-
-If you need a static bundle (e.g., to host behind a simple web server), run:
-```bash
-npm run build
-```
-This produces a `dist/` folder with plain JavaScript and CSS. Serve that folder (for example with `npm run preview` or any static host) instead of opening the uncompiled `index.html` directly.
+Everything lives in `index.html`, `style.css`, and `script.js`, so the widget works offline and can be copy/pasted into other pages.
