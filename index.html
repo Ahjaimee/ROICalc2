@@ -3,150 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NHM ROI Calculator</title>
+  <title>Measurable Impact Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="layout">
-    <section class="page-intro">
-      <p class="eyebrow">NHM ROI calculator</p>
-      <h1>Planned maintenance savings</h1>
-      <p class="muted">See how NHM’s planned preventative maintenance cuts callouts and expensive return visits.</p>
-    </section>
+  <main class="page">
+    <section class="impact-panel" aria-labelledby="impact-title">
+      <header class="impact-panel__header">
+        <p class="impact-panel__kicker">Measurable impact</p>
+        <h1 id="impact-title">See projected ROI across your homes</h1>
+        <p class="impact-panel__subtitle">Adjust the number of homes to model proportional annual savings while keeping measured impact percentages fixed.</p>
+      </header>
 
-    <nav class="tab-bar" role="tablist" aria-label="ROI library">
-      <button id="tab-callouts-btn" class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-callouts" data-tab-target="callouts">
-        <span class="tab__label">Callout savings</span>
-        <span class="tab__pill tab__pill--live">Live</span>
-      </button>
-      <button id="tab-energy-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-energy" data-tab-target="energy">
-        <span class="tab__label">Energy efficiency</span>
-        <span class="tab__pill">Coming soon</span>
-      </button>
-      <button id="tab-staff-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-staff" data-tab-target="staff">
-        <span class="tab__label">Staff productivity</span>
-        <span class="tab__pill">Coming soon</span>
-      </button>
-      <button id="tab-inventory-btn" class="tab" role="tab" aria-selected="false" aria-controls="tab-inventory" data-tab-target="inventory">
-        <span class="tab__label">Inventory &amp; uptime</span>
-        <span class="tab__pill">Coming soon</span>
-      </button>
-    </nav>
-
-    <section id="tab-callouts" class="tab-panel is-active" role="tabpanel" aria-label="Callout savings" aria-labelledby="tab-callouts-btn" tabindex="0">
-      <section class="panel">
-        <div class="panel__header">
-          <div>
-            <p class="kicker">Dashboard</p>
-            <h2>Callouts Savings</h2>
-            <p class="muted small">Update the asset count to refresh estimated savings instantly.</p>
-          </div>
+      <section class="homes-control" aria-label="Homes selector">
+        <div class="homes-control__head">
+          <label for="homesRange">Number of homes</label>
+          <output id="homesOutput" for="homesRange" data-field="selectedHomes">13 homes</output>
         </div>
-
-        <div class="split">
-          <article class="card">
-            <header class="card__header">
-              <div>
-                <h3>Asset input</h3>
-                <p class="muted small">All assets covered under NHM PPM.</p>
-              </div>
-              <span class="info" title="Include all equipment such as hoists, beds, pressure pumps, baths, etc. (excluding slings). Assumes industry average of 1 callout per 6 assets annually, versus NHM at 1 per 20 with stronger first-fix performance.">?</span>
-            </header>
-
-            <form id="inputs" class="form" novalidate>
-              <label class="field">
-                <div class="field__label">
-                  <span>Number of assets</span>
-                </div>
-                <p class="muted small">Drag in single-asset steps up to 1,000 assets.</p>
-                <div class="range-control">
-                  <div class="range-header">
-                    <span class="muted small">Drag to adjust</span>
-                    <span class="range-value" data-field="assetDisplay">100 assets</span>
-                  </div>
-                  <input type="range" name="assetsRange" min="0" max="1000" step="1" value="100" />
-                  <div class="range-control__scale">
-                    <span>0</span>
-                    <span>1k</span>
-                  </div>
-                </div>
-              </label>
-            </form>
-          </article>
-
-          <article class="card card--summary" aria-live="polite">
-            <header class="card__header card__header--summary">
-              <div>
-                <p class="muted">Estimated annual savings</p>
-                <p class="summary__value" data-field="totalSavings">£0</p>
-              </div>
-              <span class="pill pill--accent">£100 per callout</span>
-            </header>
-
-            <div class="tile-grid">
-              <article class="tile tile--accent">
-                <div class="tile__label-row">
-                  <p class="tile__label">Callouts avoided per year</p>
-                  <span class="info" title="Industry average: ~1 callout per 6 assets annually. NHM planned maintenance: ~1 callout per 20 assets.">?</span>
-                </div>
-                <p class="tile__value" data-field="calloutsSaved">0.0</p>
-                <p class="tile__sub">Estimated savings: <strong data-field="calloutSavings">£0</strong>.</p>
-              </article>
-
-              <article class="tile tile--accent">
-                <div class="tile__label-row">
-                  <p class="tile__label">Return visits avoided</p>
-                  <span class="info" title="First-fix comparison: industry averages ~80% versus NHM at ~95%, cutting down second visits.">?</span>
-                </div>
-                <p class="tile__value" data-field="returnVisitsSaved">0.0</p>
-                <p class="tile__sub">Estimated savings: <strong data-field="returnSavings">£0</strong>.</p>
-              </article>
-            </div>
-          </article>
+        <input id="homesRange" name="homesRange" type="range" min="1" max="30" value="13" step="1" />
+        <div class="homes-control__scale" aria-hidden="true">
+          <span>1</span>
+          <span>30</span>
         </div>
       </section>
-    </section>
 
-    <section id="tab-energy" class="tab-panel" role="tabpanel" aria-label="Energy efficiency" aria-labelledby="tab-energy-btn" aria-hidden="true" tabindex="-1">
-      <div class="card card--placeholder">
-        <div class="card__header">
+      <section class="metric-list" aria-live="polite">
+        <article class="metric-card">
+          <span class="metric-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M4 14l4-4 3 3 6-6" />
+              <path d="M17 7h3v3" />
+              <path d="M4 20h16" />
+            </svg>
+          </span>
           <div>
-            <h3>Energy efficiency ROI</h3>
-            <p class="muted small">A forthcoming calculator for reduced consumption and running costs.</p>
+            <p class="metric-card__value">86%</p>
+            <p class="metric-card__label">Reduction in equipment breakdowns</p>
           </div>
-          <span class="pill pill--ghost">In design</span>
-        </div>
-        <p class="muted">Stay tuned for savings from sensor-driven schedules and smart controls.</p>
-      </div>
-    </section>
+        </article>
 
-    <section id="tab-staff" class="tab-panel" role="tabpanel" aria-label="Staff productivity" aria-labelledby="tab-staff-btn" aria-hidden="true" tabindex="-1">
-      <div class="card card--placeholder">
-        <div class="card__header">
+        <article class="metric-card">
+          <span class="metric-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <circle cx="12" cy="12" r="7" />
+              <path d="M12 8v8" />
+              <path d="M9 10h6" />
+              <path d="M9 14h6" />
+            </svg>
+          </span>
           <div>
-            <h3>Staff productivity ROI</h3>
-            <p class="muted small">Quantifies technician time saved and dispatch reductions.</p>
+            <p class="metric-card__value" data-field="estimatedSavings">£78,294</p>
+            <p class="metric-card__label">Estimated annual saving on callouts, return visits and reduced downtime</p>
           </div>
-          <span class="pill pill--ghost">In design</span>
-        </div>
-        <p class="muted">We’ll show how fewer truck rolls and first-time fixes add to savings.</p>
-      </div>
-    </section>
+        </article>
 
-    <section id="tab-inventory" class="tab-panel" role="tabpanel" aria-label="Inventory and uptime" aria-labelledby="tab-inventory-btn" aria-hidden="true" tabindex="-1">
-      <div class="card card--placeholder">
-        <div class="card__header">
+        <article class="metric-card">
+          <span class="metric-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M5 12a7 7 0 1 0 7-7" />
+              <path d="M5 5v4h4" />
+              <path d="M12 9v3l2 2" />
+            </svg>
+          </span>
           <div>
-            <h3>Inventory &amp; uptime ROI</h3>
-            <p class="muted small">Models spares optimisation and uptime resilience.</p>
+            <p class="metric-card__value">20%</p>
+            <p class="metric-card__label">Reduction in equipment downtime</p>
           </div>
-          <span class="pill pill--ghost">In design</span>
-        </div>
-        <p class="muted">Track how better parts planning reduces downtime costs across sites.</p>
-      </div>
+        </article>
+
+        <article class="metric-card">
+          <span class="metric-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M4 8h16" />
+              <path d="M4 12h10" />
+              <path d="M4 16h7" />
+              <path d="M17 10l3 2-3 2" />
+            </svg>
+          </span>
+          <div>
+            <p class="metric-card__value">79%</p>
+            <p class="metric-card__label">Reduction in return visits</p>
+          </div>
+        </article>
+      </section>
+
+      <p class="impact-panel__footnote">Figures are based on measured results from a 13-home customer group. Savings are scaled proportionally for illustration.</p>
     </section>
   </main>
 
